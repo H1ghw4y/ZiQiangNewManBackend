@@ -17,9 +17,14 @@ settings in developing environment
 """
 
 from pathlib import Path
+import os, sys
+
+# print(sys.path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Highway,追加导包路径
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -43,6 +48,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     'rest_framework',  # DRF
+    'test_lhw.apps.TestLhwConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -88,11 +95,11 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.159.131',  # 数据库主机
+        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
         'USER': 'zqnewman',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb '  # 数据库名字
+        'NAME': 'ZqNewmanDb'  # 数据库名字
     }
 }
 
@@ -129,17 +136,18 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# 以下为redis相关配置
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.159.131/0",
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://192.168.159.131:6379/0", #换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "session": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.159.131/1",
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://192.168.159.131:6379/1", #换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -147,3 +155,48 @@ CACHES = {
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
+# 以上为redis相关配置
+
+#以下为日志输出配置，还没配置好
+#参考：https://www.bilibili.com/video/BV1ya411A7C8/?p=12&spm_id_from=pageDriver&vd_source=763af5f146c65b47f793e885944c3b1b
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,  # 是否禁用已经存在的日志器
+#     'formatters': {  # 日志信息显示的格式
+#         'verbose': {
+#             'format': '%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s'
+#         },
+#         'simple': {
+#             'format': '%(levelname)s %(module)s %(lineno)d %(message)s'
+#         },
+#     },
+#     'filters': {  # 对日志进行过滤
+#         'require_debug_true': {  # django在debug模式下才输出日志
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#     },
+#     'handlers': {  # 日志处理方法
+#         'console': {  # 向终端中输出日志
+#             'level': 'INFO',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple'
+#         },
+#         'file': {  # 向文件中输出日志
+#             'level': 'INFO',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': os.path.join(os.path.dirname(BASE_DIR), "logs/mylog.log"),  # 日志文件的位置
+#             'maxBytes': 300 * 1024 * 1024,
+#             'backupCount': 10,
+#             'formatter': 'verbose'
+#         },
+#     },
+#     'loggers': {  # 日志器
+#         'django': {  # 定义了一个名为django的日志器
+#             'handlers': ['console', 'file'],  # 可以同时向终端与文件中输出日志
+#             'propagate': True,  # 是否继续传递日志信息
+#             'level': 'INFO',  # 日志器接收的最低日志级别
+#         },
+#     }
+# }
+#以上为日志输出配置

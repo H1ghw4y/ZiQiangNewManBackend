@@ -1,3 +1,4 @@
 # 忽略本地.idea文件夹
 
 .idea/
+logs/*.log
