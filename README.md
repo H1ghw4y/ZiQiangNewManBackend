@@ -14,17 +14,17 @@
 
 - 将setting.py改成dev(开发使用)和prod(生产使用)两个文件，现在是开发阶段，使用dev作为配置文件
 
-  ![image-20221122164718791](img\image-20221122164718791.png)
+  ![image-20221122164718791](/img/image-20221122164718791.png)
 
 - 在dev中配置了mysql数据库，redis数据库
 
 - 我们所写的应用在`NewmanBackend/NewmanBackend/apps`中进行，里面放了一个test_lhw应用：
 
-  ![image-20221122165213905](img\image-20221122165213905.png)
+  ![image-20221122165213905](img/image-20221122165213905.png)
 
   创建应用后记得在dev.py中INSTALLED_APPS添加:
 
-  ![image-20221122165442050](img\image-20221122165442050.png)
+  ![image-20221122165442050](/img/image-20221122165442050.png)
 
 - 日志文件还没有配置好
 
