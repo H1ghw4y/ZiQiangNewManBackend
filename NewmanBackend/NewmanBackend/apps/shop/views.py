@@ -38,7 +38,7 @@ class ShopView(APIView):
             "count": shop_count,
             "data": info.data
         })
-
+    # 由于暂时没有考虑商家入驻，post,put,delete等方法未实现
     # 添加数据
     def post(self, request):
         data = request.data
@@ -46,12 +46,12 @@ class ShopView(APIView):
         if not flag:
             return Response({
                 "status": 201,
-                "msg": "学生添加失败",
+                "msg": "添加失败",
                 "data": []
             })
         return Response({
             "status": 200,
-            "msg": "学生添加成功",
+            "msg": "添加成功",
             "data": []
         })
 
@@ -86,3 +86,27 @@ class ShopView(APIView):
             "msg": "删除成功",
             "data": []
         })
+# 商铺详情,参数参考之前在QQ群里发的models.py
+# is_mark还未实现
+# Comment模型还未实现
+class ShopDetailView(APIView):
+    def get(self, request):
+        page = request.query_params.get('page')
+        page_size = request.query_params.get('page_size')
+        the_shop_name = request.query_params.get('shop_name')
+        is_sort = request.query_params.get('sort')
+        official_evaluation = request.query_params.get('official_evaluation')
+        is_mark = request.query_params.get('mark')
+        # 只查看吃乎作者的评价
+        if official_evaluation == "True":
+            if is_sort == "True":
+                # 按时间排序
+                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-date')
+            else :
+                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-like_num')
+        else:
+            if is_sort == "True":
+                # 按时间排序
+                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-date')
+            else :
+                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-like_num')
