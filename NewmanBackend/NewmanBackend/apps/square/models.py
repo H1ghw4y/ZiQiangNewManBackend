@@ -1,8 +1,12 @@
 from django.db import models
-from ..shop.models import *
+
+
+# from ..shop import *
 
 
 # Create your models here.
+# from ..shop.models import Shop
+
 
 class User(models.Model):
     """
@@ -11,7 +15,7 @@ class User(models.Model):
     username = models.CharField(max_length=20, verbose_name="用户名")
     user_account = models.CharField(max_length=15, verbose_name=" 用户账号")
     user_pwd = models.CharField(max_length=30, verbose_name="用户密码")
-    user_profile_photo = models.ImageField(upload_to="photos/", verbose_name="用户头像")
+    user_profile_photo = models.ImageField(upload_to="photos/", verbose_name="用户头像", null=True)
     is_chihu = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
 
     class Meta:
@@ -24,8 +28,8 @@ class User(models.Model):
 
 
 class Comment(models.Model):
-    user_id = models.ForeignKey("User", on_delete=models.CASCADE)  # 关联的
-    shop_id = models.ForeignKey(Shop, on_delete=models.CASCADE)  # 关联的店铺id
+    user = models.ForeignKey("User", on_delete=models.CASCADE)  # 关联的
+    shop = models.ForeignKey("shop.Shop", on_delete=models.CASCADE)  # 关联的店铺id
     comment_content = models.TextField(verbose_name="评论内容")
     publish_time = models.DateField(auto_now=True, verbose_name="发表时间")
     reply_count = models.IntegerField(verbose_name="回帖数量")
@@ -43,7 +47,7 @@ class Comment(models.Model):
 
 class Photos(models.Model):
     """用于存放评论图片表"""
-    comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="photos/", verbose_name="评论的图片")
 
     class Meta:

@@ -49,7 +49,8 @@ INSTALLED_APPS = [
 
     'rest_framework',  # DRF
     'test_lhw.apps.TestLhwConfig',
-
+    'shop.apps.ShopConfig',
+    'square.apps.SquareConfig',
 ]
 
 MIDDLEWARE = [

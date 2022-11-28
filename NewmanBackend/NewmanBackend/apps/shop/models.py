@@ -7,7 +7,7 @@ from django.db import models
 class Shop(models.Model):
     shop_name = models.CharField(max_length=20, verbose_name='店铺名称')
     # upload_to 指定的路径待定
-    shop_profile_photo = models.ImageField(upload_to='photos', verbose_name='图片', null=True)
+    shop_profile_photo = models.ImageField(upload_to='photos', verbose_name='店铺图片', null=True)
     shop_score = models.IntegerField(default=0, verbose_name='店铺评分')
     comment_count = models.IntegerField(default=0, verbose_name='评论量')
     shop_isChiHu = models.BooleanField(default=False, verbose_name='是否吃乎认证')
