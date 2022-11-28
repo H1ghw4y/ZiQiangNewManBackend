@@ -1,7 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render
 
-# from NewmanBackend.NewmanBackend.apps.shop.models import Shop
 import sys
 
 sys.path.append("..")
@@ -66,9 +64,11 @@ def parse2object(comment: Comment):
     shop_dict = dict()
     user_dict["time"] = comment.publish_time.strftime("%Y-%m-%d")
     user_dict["user_name"] = the_user.username
+    # 你要修改好图片路径，才能使用下面的代码
     # user_dict["user_profile_photo_url"] = the_user.user_profile_photo
     user_dict["is_ChiHu"] = str(the_user.is_chihu)
     user_dict["image_url"] = list()
+    # 你要修改好图片路径，才能使用下面的代码
     # try:
     #     photos = models.Photos.objects.get(id=comment.id)
     #     for photo in photos:
