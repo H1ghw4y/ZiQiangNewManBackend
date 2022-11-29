@@ -29,5 +29,8 @@ urlpatterns = [
     path("api/shop/", include('shop.urls')),
     path("api/get_page/", include('square.urls')),
     path("square/", include("square.urls"))
+    path("user/collect/", include('collect.urls')),
+    path("user/", include('user.urls')),
+    path("signin/", include('signin.urls')),
 ]
 urlpatterns += router.urls

@@ -1,5 +1,5 @@
 from django.http import JsonResponse, HttpResponse
-from db.models import User
+from ..db.models import User
 import json
 
 # def signin(request):
