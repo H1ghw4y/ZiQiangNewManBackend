@@ -1,9 +1,6 @@
 from django.http import JsonResponse, HttpResponse
-<<<<<<< HEAD
 from ..db.models import User
-=======
-from db.models import User
->>>>>>> origin/ZJY
+from ..db.models import User
 import json
 
 # def signin(request):
