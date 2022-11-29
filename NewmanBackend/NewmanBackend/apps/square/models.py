@@ -12,11 +12,11 @@ class User(models.Model):
     """
     用户表
     """
-    username = models.CharField(max_length=20, verbose_name="用户名")
-    user_account = models.CharField(max_length=15, verbose_name=" 用户账号")
-    user_pwd = models.CharField(max_length=30, verbose_name="用户密码")
-    user_profile_photo = models.ImageField(upload_to="photos/", verbose_name="用户头像", null=True)
-    is_chihu = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
+    user_name = models.CharField(max_length=20, verbose_name="用户名")
+    sid = models.CharField(max_length=15, verbose_name=" 用户账号")
+    password = models.CharField(max_length=30, verbose_name="用户密码")
+    image = models.ImageField(upload_to="photos/", verbose_name="用户头像", null=True)
+    is_ch = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
 
     class Meta:
         db_table = "Users"
@@ -24,7 +24,7 @@ class User(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.user_account + " " + self.username
+        return self.sid + " " + self.user_name
 
 
 class Comment(models.Model):

@@ -61,17 +61,18 @@ def parse2object(comment: Comment):
       }
     }"""
     data = dict()
-    try:
-        the_user = User.objects.get(id=comment.user_id)
-    except User.DoesNotExist:
-        pass
+    # try:
+    #     the_user = User.objects.get(id=comment.user_id)
+    # except User.DoesNotExist:
+    #     pass
+    user = comment.user
     user_dict = dict()
     shop_dict = dict()
     user_dict["time"] = comment.publish_time.strftime("%Y-%m-%d")
-    user_dict["user_name"] = the_user.username
+    user_dict["user_name"] = user.user_name
     # 你要修改好图片路径，才能使用下面的代码
     # user_dict["user_profile_photo_url"] = the_user.user_profile_photo
-    user_dict["is_ChiHu"] = str(the_user.is_chihu)
+    user_dict["is_ChiHu"] = str(user.is_ch)
     user_dict["image_url"] = list()
     # 你要修改好图片路径，才能使用下面的代码
     # try:
