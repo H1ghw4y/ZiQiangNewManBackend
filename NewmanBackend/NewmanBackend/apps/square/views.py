@@ -1,4 +1,6 @@
-from django.http import JsonResponse
+import json
+
+from django.http import JsonResponse, HttpResponse
 
 import sys
 
@@ -27,7 +29,10 @@ def get_page(request):
     for comment in new_comments:
         item = parse2object(comment)
         response_data["data"].append(item)
-    return JsonResponse(response_data)
+    return HttpResponse(
+        json.dumps(response_data, ensure_ascii=False),
+        content_type="application/json,charset=utf-8"
+    )
 
 
 # ----------------------------utils-----------------------------------
