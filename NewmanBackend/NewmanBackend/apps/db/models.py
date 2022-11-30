@@ -1,17 +1,18 @@
 from django.db import models
 
+
 class User(models.Model):
     """
     用户表
     """
-    user_name = models.CharField(max_length=20, verbose_name="用户名",default="")
-    sid = models.CharField(max_length=15, verbose_name=" 用户账号",default="")
-    password = models.CharField(max_length=30, verbose_name="用户密码",default="")
+    user_name = models.CharField(max_length=20, verbose_name="用户名", default="")
+    sid = models.CharField(max_length=15, verbose_name=" 用户账号", default="")
+    password = models.CharField(max_length=30, verbose_name="用户密码", default="")
     image = models.ImageField(upload_to="photos/", verbose_name="用户头像", null=True)
     is_ch = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
 
     class Meta:
-        db_table = "tb_user"
+        db_table = "Users"
         verbose_name = "用户"
         verbose_name_plural = verbose_name
 
@@ -31,7 +32,7 @@ class Shop(models.Model):
 
     class Meta:
         # 指定表名
-        db_table = 'db_shop'
+        db_table = 'Shops'
         verbose_name = '店铺'  # 在admin站点中显示的名称
         verbose_name_plural = verbose_name  # 显示的复数名称
 
@@ -41,16 +42,16 @@ class Shop(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey("User", on_delete=models.CASCADE,default=None)  # 关联的
-    shop = models.ForeignKey("Shop", on_delete=models.CASCADE,default=None)  # 关联的店铺id
+    user = models.ForeignKey("User", on_delete=models.CASCADE, default=None)  # 关联的
+    shop = models.ForeignKey("Shop", on_delete=models.CASCADE, default=None)  # 关联的店铺id
     comment_content = models.TextField(default="", verbose_name="评论内容")
     publish_time = models.DateField(auto_now=True, verbose_name="发表时间")
-    reply_count = models.IntegerField(default=0,verbose_name="回帖数量")
-    like_count = models.IntegerField(default=0,verbose_name="点赞数量")
-    shop_score = models.IntegerField(default=0,verbose_name="评论给店铺的分数")
+    reply_count = models.IntegerField(default=0, verbose_name="回帖数量")
+    like_count = models.IntegerField(default=0, verbose_name="点赞数量")
+    shop_score = models.IntegerField(default=0, verbose_name="评论给店铺的分数")
 
     class Meta:
-        db_table = "db_comment"
+        db_table = "Comments"
         verbose_name = "评论表"
         verbose_name_plural = verbose_name
 
@@ -79,7 +80,7 @@ class Huitie(models.Model):
     date = models.DateTimeField  # 发表时间
 
     class Meta:
-        db_table = 'tb_huitie'
+        db_table = 'Huitie'
         verbose_name = '评论回帖'
         verbose_name_plural = verbose_name
 
@@ -93,7 +94,7 @@ class Collect(models.Model):
     time = models.DateTimeField(auto_now_add=True)  # 收藏时间
 
     class Meta:
-        db_table = 'tb_collect'
+        db_table = 'Collects'
         verbose_name = '收藏'
         verbose_name_plural = verbose_name
 

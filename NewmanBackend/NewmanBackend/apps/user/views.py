@@ -16,15 +16,15 @@ def get(request):
     user = UserSerializer(user1)
     comments = Comment.objects.filter(user=user1.id).order_by("-id")
     response_data = dict()
-    response_data['user'] = user.data
+    response_data['user_data'] = user.data
     response_data["comment_count"] = comments.count()
-    print(comments.count())
+    # print(comments.count())
     response_data["comment"] = list()
-    print(comments)
+    # print(comments)
     for comment in comments:
         item = parse2object(comment)
         response_data["comment"].append(item)
-    return JsonResponse(response_data)
+    return JsonResponse(response_data, safe=False)
 
 
 # ----------------------------utils-----------------------------------
@@ -47,10 +47,10 @@ def parse2object(comment: Comment):
         }
     """
     data = dict()
-    the_user = User.objects.get(id=comment.user)
+    the_user = User.objects.get(id=comment.user_id)
     data["time"] = comment.publish_time.strftime("%Y-%m-%d")
     data["user_name"] = the_user.user_name
-    data["user_profile_photo_url"] = the_user.image
+    # data["user_profile_photo_url"] = the_user.image
     # 你要修改好图片路径，才能使用下面的代码
     # try:
     #     photos = models.Photos.objects.get(id=comment.id)
@@ -58,8 +58,9 @@ def parse2object(comment: Comment):
     #         user_dict["image_url"].append(photo.image)
     # except models.Photos.DoesNotExist:
     #     pass
-    the_shop = Shop.objects.get(id=comment.shop)
+    the_shop = Shop.objects.get(id=comment.shop_id)
     data['shop_name'] = the_shop.shop_name
+    data["comment_score"] = comment.shop_score
     data["comment_id"] = str(comment.id)
     data["comment_content"] = comment.comment_content
     data["comment_like_count"] = comment.like_count

@@ -63,7 +63,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    #"django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -102,11 +102,11 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+        'HOST': '127.0.0.1',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
-        'USER': 'zqnewman',  # 数据库用户名
+        'USER': '123',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb_2'  # 数据库名字
+        'NAME': 'zqnewmandb'  # 数据库名字
     }
 }
 
