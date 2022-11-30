@@ -106,10 +106,11 @@ class ShopDetailView(APIView):
         if official_evaluation == "True":
             if is_sort == "True":
                 # 按时间排序
-                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_chihu=True).order_by('-publish_time')[:page*page_size]
+                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-publish_time')[:page*page_size]
+
             else:
-                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_chihu=True).order_by('-like_count')[:page*page_size]
-            count = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_chihu=True)[:page*page_size].count()
+                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-like_count')[:page*page_size]
+            count = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True)[:page*page_size].count()
         else:
             if is_sort == "True":
                 # 按时间排序

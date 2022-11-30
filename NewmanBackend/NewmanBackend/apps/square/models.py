@@ -19,8 +19,8 @@ class User(models.Model):
     is_ch = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
 
     class Meta:
-        db_table = "Users"
-        verbose_name = "用户表"
+        db_table = "tb_user"
+        verbose_name = "用户"
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -37,7 +37,7 @@ class Comment(models.Model):
     shop_score = models.IntegerField(verbose_name="评论给店铺的分数")
 
     class Meta:
-        db_table = "Comments"
+        db_table = "db_comment"
         verbose_name = "评论表"
         verbose_name_plural = verbose_name
 

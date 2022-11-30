@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     'rest_framework',  # DRF
-    'test_lhw.apps.TestLhwConfig',
+    # 'test_lhw.apps.TestLhwConfig',
     'shop.apps.ShopConfig',
     'square.apps.SquareConfig',
 ]
@@ -96,11 +96,11 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.23.129',  # 数据库主机,要修改成自己的
+        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '66666666',  # 数据库用户密码
-        'NAME': 'ZiQiangBack'  # 数据库名字
+        'USER': 'zqnewman',  # 数据库用户名
+        'PASSWORD': '123456',  # 数据库用户密码
+        'NAME': 'ZqNewmanDb_1'  # 数据库名字
     }
 }
 

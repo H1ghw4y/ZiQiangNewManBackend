@@ -25,9 +25,7 @@ router = routers.SimpleRouter()
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include('test_lhw.urls')),
-    path("api/shop/", include('shop.urls')),
-    path("api/get_page/", include('square.urls')),
+    path("shop/", include('shop.urls')),
     path("square/", include("square.urls"))
 ]
 urlpatterns += router.urls

@@ -16,7 +16,7 @@ class Shop(models.Model):
 
     class Meta:
         # 指定表名
-        db_table = 'Shops'
+        db_table = 'db_shop'
         verbose_name = '店铺'  # 在admin站点中显示的名称
         verbose_name_plural = verbose_name  # 显示的复数名称
 
