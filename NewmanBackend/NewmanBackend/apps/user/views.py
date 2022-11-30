@@ -68,18 +68,6 @@ def parse2object(comment: Comment):
     return data
 
 
-# def get(request):
-#     sid = request.GET.get('sid')
-#     user1 = User.objects.get(sid=sid)
-#     comment1 = Comment.objects.filter(user_id=user1.id).order_by('-id')
-#     comment_count = comment1.count()
-#     user = UserSerializer(user1)
-#     comment = CommentSerializer(comment1, many=True)
-#     return JsonResponse({'user_data': user.data, 'comment_count': comment_count, 'comment': comment.data})
-#
-#     # return JsonResponse(user, comment)
-
-
 def change_tx(request):
     data = json.loads(request.body)
     sid = data.get('sid')
