@@ -2,7 +2,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse, HttpResponse
-from ..db.models import Collect, Shop, User
+import sys
+
+sys.path.append("..")
+from db.models import Collect, Shop, User
 from .serializers import ShopSerializer
 
 

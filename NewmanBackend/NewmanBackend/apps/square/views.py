@@ -5,9 +5,9 @@ from django.http import JsonResponse, HttpResponse
 import sys
 
 sys.path.append("..")
-from shop.models import Shop
+from db.models import Shop, Comment, User
 # Create your views here.
-from .models import Comment, User
+
 
 
 def get_page(request):
@@ -68,10 +68,10 @@ def parse2object(comment: Comment):
     user_dict = dict()
     shop_dict = dict()
     user_dict["time"] = comment.publish_time.strftime("%Y-%m-%d")
-    user_dict["user_name"] = the_user.username
+    user_dict["user_name"] = the_user.user_name
     # 你要修改好图片路径，才能使用下面的代码
     # user_dict["user_profile_photo_url"] = the_user.user_profile_photo
-    user_dict["is_ChiHu"] = str(the_user.is_chihu)
+    user_dict["is_ChiHu"] = str(the_user.is_ch)
     user_dict["image_url"] = list()
     # 你要修改好图片路径，才能使用下面的代码
     # try:

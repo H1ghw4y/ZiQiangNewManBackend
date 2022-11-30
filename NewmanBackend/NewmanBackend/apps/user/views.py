@@ -2,7 +2,10 @@ import json
 from .serializers import *
 
 from django.http import JsonResponse
-from ..db.models import *
+import sys
+
+sys.path.append("..")
+from db.models import *
 from django.views.generic import View
 from .serializers import *
 

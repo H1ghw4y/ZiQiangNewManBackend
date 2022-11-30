@@ -1,20 +1,22 @@
 from django.db import models
 
-
 class User(models.Model):
-    sid = models.IntegerField(default=0, null=True)  # 学号
-    user_name = models.CharField(max_length=20)  # 用户名
-    password = models.IntegerField(default=0, null=True)  # 密码
-    image = models.ImageField(null=True)  # 头像
-    is_ch = models.BooleanField(default=False)  # 是否为吃乎作者
+    """
+    用户表
+    """
+    user_name = models.CharField(max_length=20, verbose_name="用户名",default="")
+    sid = models.CharField(max_length=15, verbose_name=" 用户账号",default="")
+    password = models.CharField(max_length=30, verbose_name="用户密码",default="")
+    image = models.ImageField(upload_to="photos/", verbose_name="用户头像", null=True)
+    is_ch = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
 
     class Meta:
-        db_table = 'tb_user'
-        verbose_name = '用户'
+        db_table = "tb_user"
+        verbose_name = "用户"
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.sid
+        return self.sid + " " + self.user_name
 
 
 class Shop(models.Model):

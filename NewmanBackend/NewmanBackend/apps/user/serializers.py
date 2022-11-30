@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from ..db.models import User, Comment
+import sys
+
+sys.path.append("..")
+from db.models import User, Comment
 
 
 class UserSerializer(serializers.ModelSerializer):
