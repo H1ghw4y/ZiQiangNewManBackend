@@ -76,8 +76,8 @@ class Photos(models.Model):
 class Huitie(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, null=True, blank=True, default=None)  # 外键 用户 id
     comment = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True, default=None)  # 外键 评论 id
-    content = models.TextField  # 回帖内容
-    date = models.DateTimeField  # 发表时间
+    content = models.TextField(default="")  # 回帖内容
+    date = models.DateTimeField(auto_now=True)  # 发表时间
 
     class Meta:
         db_table = 'Huitie'
@@ -101,3 +101,14 @@ class Collect(models.Model):
 
 class Chihu(models.Model):
     user_id = models.IntegerField(default=0)  # 吃乎用户账号
+
+
+class PhotoHuiTie(models.Model):
+    """回帖图片"""
+    comment_target = models.ForeignKey("Comment", on_delete=models.CASCADE, verbose_name="关联的评论")
+    models.ImageField(upload_to="photos/", verbose_name="图片")
+
+    class Meta:
+        db_table = "PhotoHuiTie"
+        verbose_name = "回帖图片"
+        verbose_name_plural = verbose_name
