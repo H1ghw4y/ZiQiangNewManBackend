@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from . import models
 from .serializers import ShopSerializer
+import sys
 
+sys.path.append("..")
+from db.models import Comment, Shop
+from square.serializers import CommentSerializer
 
 class ShopView(APIView):
     # 获取数据
@@ -11,8 +14,8 @@ class ShopView(APIView):
         is_sort = request.query_params.get('sort')
         is_selection = request.query_params.get('selection')
         # page、pagesize还未使用
-        page = request.query_params.get('page')
-        page_size = request.query_params.get('page_size')
+        page = int(request.query_params.get('page'))
+        page_size = int(request.query_params.get('page_size'))
         # print("is_sort=",is_sort)
         # print(type(is_sort))
         # data = models.Shop.objects.all()
@@ -21,28 +24,27 @@ class ShopView(APIView):
         if is_selection == "True":
             # 这里is_sort是str, 默认是按shop_score排序，为True才按comment_count排序
             if is_sort == "True":
-                data = models.Shop.objects.filter(shop_isChiHu=True).order_by('-comment_count')
+                data = Shop.objects.filter(shop_isChiHu=True).order_by('-comment_count')[:page*page_size]
             else:
-                data = models.Shop.objects.filter(shop_isChiHu=True).order_by('-shop_score')
-            shop_count = models.Shop.objects.filter(shop_isChiHu=True).count()
+                data = Shop.objects.filter(shop_isChiHu=True).order_by('-shop_score')[:page*page_size]
+            shop_count = Shop.objects.filter(shop_isChiHu=True)[:page*page_size].count()
         else:
             if is_sort == "True":
-                data = models.Shop.objects.all().order_by('-comment_count')
+                data = Shop.objects.all().order_by('-comment_count')[:page*page_size]
             else:
-                data = models.Shop.objects.all().order_by('-shop_score')
-            shop_count = models.Shop.objects.all().count()
+                data = Shop.objects.all().order_by('-shop_score')[:page*page_size]
+            shop_count = Shop.objects.all()[:page*page_size].count()
         info = ShopSerializer(data, many=True)
         return Response({
-            "status": 200,
-            "msg": "",
             "count": shop_count,
             "data": info.data
         })
+
     # 由于暂时没有考虑商家入驻，post,put,delete等方法未实现
     # 添加数据
     def post(self, request):
         data = request.data
-        flag = models.Shop.objects.create(**data)
+        flag = Shop.objects.create(**data)
         if not flag:
             return Response({
                 "status": 201,
@@ -58,7 +60,7 @@ class ShopView(APIView):
     # 编辑数据
     def put(self, request):
         id = request.data.pop('id')
-        flag = models.Shop.objects.filter(id=id).update(**request.data)
+        flag = Shop.objects.filter(id=id).update(**request.data)
         if not flag:
             return Response({
                 "status": 201,
@@ -74,7 +76,7 @@ class ShopView(APIView):
     # 删除数据
     def delete(self, request):
         id = request.data.get('id')
-        student = models.Shop.objects.filter(id=id).delete()
+        student = Shop.objects.filter(id=id).delete()
         if not student[0]:
             return Response({
                 "status": 201,
@@ -86,13 +88,15 @@ class ShopView(APIView):
             "msg": "删除成功",
             "data": []
         })
+
+
 # 商铺详情,参数参考之前在QQ群里发的models.py
-# is_mark还未实现
-# Comment模型还未实现
+# is_mark还未实现 2022-11-28
+
 class ShopDetailView(APIView):
     def get(self, request):
-        page = request.query_params.get('page')
-        page_size = request.query_params.get('page_size')
+        page = int(request.query_params.get('page'))
+        page_size = int(request.query_params.get('page_size'))
         the_shop_name = request.query_params.get('shop_name')
         is_sort = request.query_params.get('sort')
         official_evaluation = request.query_params.get('official_evaluation')
@@ -101,12 +105,19 @@ class ShopDetailView(APIView):
         if official_evaluation == "True":
             if is_sort == "True":
                 # 按时间排序
-                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-date')
-            else :
-                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-like_num')
+                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-publish_time')[:page*page_size]
+            else:
+                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-like_count')[:page*page_size]
+            count = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True)[:page*page_size].count()
         else:
             if is_sort == "True":
                 # 按时间排序
-                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-date')
-            else :
-                data = models.Comment.objects.filter(shop_name=the_shop_name,official_evaluation=True).order_by('-like_num')
+                data = Comment.objects.filter(shop__shop_name=the_shop_name).order_by('-publish_time')[:page*page_size]
+            else:
+                data = Comment.objects.filter(shop__shop_name=the_shop_name).order_by('-like_count')[:page*page_size]
+            count = Comment.objects.filter(shop__shop_name=the_shop_name)[:page*page_size].count()
+        info = CommentSerializer(data, many=True)
+        return Response({
+            "count": count,  # 还没写
+            "data": info.data
+        })

@@ -15,7 +15,7 @@ from django.core.cache.backends.redis import RedisCache
 settings in developing environment
 开发阶段即未上线时项目文件
 """
-
+from ..apps import *
 from pathlib import Path
 import os, sys
 
@@ -48,10 +48,17 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     'rest_framework',  # DRF
-    'test_lhw.apps.TestLhwConfig',
+    #'test_lhw.apps.TestLhwConfig',
+    # 'test_lhw.apps.TestLhwConfig',
     'shop.apps.ShopConfig',
+    'square.apps.SquareConfig',
+    "user.apps.UserConfig",
+    "collect.apps.CollectConfig",
+    "db.apps.DbConfig",
+    "signin.apps.SigninConfig",
 
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -100,7 +107,7 @@ DATABASES = {
         'PORT': 3306,  # 数据库端口
         'USER': 'zqnewman',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb'  # 数据库名字
+        'NAME': 'ZqNewmanDb_2'  # 数据库名字
     }
 }
 
@@ -141,14 +148,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://192.168.159.131:6379/0", #换成自己的
+        "LOCATION": "redis://127.0.0.1:3306/0", #换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "session": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://192.168.159.131:6379/1", #换成自己的
+        "LOCATION": "redis://127.0.0.1：3306/1", #换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
