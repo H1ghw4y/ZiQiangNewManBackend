@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Shop
 from .serializers import ShopSerializer
 import sys
 
 sys.path.append("..")
-from square.models import Comment
+from db.models import Comment, Shop
 from square.serializers import CommentSerializer
 
 class ShopView(APIView):
@@ -107,7 +106,10 @@ class ShopDetailView(APIView):
             if is_sort == "True":
                 # 按时间排序
                 data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-publish_time')[:page*page_size]
+<<<<<<< HEAD
 
+=======
+>>>>>>> ZJY
             else:
                 data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-like_count')[:page*page_size]
             count = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True)[:page*page_size].count()

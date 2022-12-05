@@ -1,13 +1,35 @@
 import json
+import random
 
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, QueryDict
 
 import sys
 
+from django.shortcuts import render
+
 sys.path.append("..")
-from shop.models import Shop
+from db.models import Shop, Comment, User, Huitie
+
+
+# from ..db.models import Shop, Comment, User, Huitie
+
+
+# from ..db.models import Shop, Comment, User, Huitie
+
+
 # Create your views here.
-from .models import Comment, User
+
+def api_test(request):
+    comments = Comment.objects.all()
+    for comment in comments:  # 对每个评论回复
+        huitie_contents = [f"{i}" * 9 + f"->to comment_id{comment.id}" for i in range(1, 8)]  # 构造回帖内容,i为用户id
+        for idx, Huitie_content in enumerate(huitie_contents):  # 模拟每个用户都评论
+            uid = idx + 1
+            if uid == comment.user.id:  # 自己不给自己回
+                continue
+            else:
+                Huitie.objects.create(content=Huitie_content, user_id=uid, comment_id=comment.id)
+    return HttpResponse("Success")
 
 
 def get_page(request):
@@ -22,7 +44,11 @@ def get_page(request):
     data_count = page_size
     query_start = page_num * page_size
     comments = Comment.objects.all().order_by("-publish_time")
-    new_comments = comments[query_start:query_start + data_count]
+    # 越界判断
+    if query_start + data_count > comments.count() - 1:
+        new_comments = comments[query_start:]
+    else:
+        new_comments = comments[query_start:query_start + data_count]
     response_data = dict()
     response_data["data_count"] = data_count
     response_data["data"] = list()
@@ -33,6 +59,87 @@ def get_page(request):
         json.dumps(response_data, ensure_ascii=False),
         content_type="application/json,charset=utf-8"
     )
+
+
+def add_like(request):
+    """用户点赞"""
+    comment_id = int(request.GET.get("comment_id"))
+    comment = Comment.objects.filter(id=comment_id)[0]
+    comment.like_count += 1
+    comment.save()
+    return JsonResponse({"message": "True"})
+
+
+def detail(request):
+    """获取回帖
+    {
+  "data_count": 3,
+  "data": [
+    {
+      "time": "2021-05-17",
+      "user_name": "Sass",
+      "user_profile_photo_url": "image_url",
+      "comment": "xxx"
+    },
+    {
+      "time": "2021-05-17",
+      "user_name": "Sass",
+      "user_profile_photo_url": "image_url",
+      "comment": "xxx"
+    },
+    {
+      "time": "2021-05-17",
+      "user_name": "Sass",
+      "user_profile_photo_url": "image_url",
+      "comment": "xxx"
+    }
+  ]
+}
+    """
+
+    GET_dict = request.GET
+    comment_id = int(GET_dict.get("comment_id"))
+    page = int(GET_dict.get("page"))
+    page_size = int(GET_dict.get("page_size"))
+    # 构造返回数据
+    response_data = dict()
+    response_data["data_count"] = page_size
+    response_data["data"] = list()
+    # 筛选回帖
+    huitie_objects = Huitie.objects.filter(comment=comment_id).order_by("-date")
+    start = page * page_size
+    end = huitie_objects.count()
+    # 越界判断
+    if end - 1 <= start + page_size:
+        huitie_objects = huitie_objects[start:]
+    else:
+        huitie_objects = huitie_objects[start:start + page_size]
+    # 构造数据
+    for huitie in huitie_objects:
+        item = parse_detail(huitie)
+        response_data["data"].append(item)
+    return HttpResponse(
+        json.dumps(response_data, ensure_ascii=False),
+        content_type="application/json,charset=utf-8")
+
+
+def publish(request):
+    """发表评论"""
+    # Todo
+    if request.method == "GET":
+        return render(request, "1.html")
+    params: QueryDict = request.POST
+    comment_id = int(params.get("comment_id"))
+    shop_id = int(params.get("shop_id"))
+    user_id = int(params.get("user_id"))
+    image_list = request.FILES.getlist("filename")
+    # 评论+1
+    comment = Comment.objects.get(id=comment_id)
+    comment.reply_count += 1
+    comment.save()
+    # 创建回帖数据
+    Huitie.objects.create(user_id=user_id)
+    return JsonResponse({"message": "True"})
 
 
 # ----------------------------utils-----------------------------------
@@ -61,10 +168,6 @@ def parse2object(comment: Comment):
       }
     }"""
     data = dict()
-    # try:
-    #     the_user = User.objects.get(id=comment.user_id)
-    # except User.DoesNotExist:
-    #     pass
     user = comment.user
     user_dict = dict()
     shop_dict = dict()
@@ -97,3 +200,19 @@ def parse2object(comment: Comment):
     except Comment.DoesNotExist:
         pass
     return data
+
+
+def parse_detail(huitie: Huitie):
+    """{
+      "time": "2021-05-17",
+      "user_name": "Sass",
+      "user_profile_photo_url": "image_url",
+      "comment": "xxx"
+    }"""
+    data_dict = dict()
+    user = huitie.user
+    data_dict["time"] = huitie.date.strftime("%Y-%m-%d")
+    data_dict[" user_name"] = user.user_name
+    data_dict["user_profile_photo_url"] = user.image if user.image else ""
+    data_dict["comment"] = huitie.content
+    return data_dict
