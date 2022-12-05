@@ -62,7 +62,7 @@ class Comment(models.Model):
 class Photos(models.Model):
     """用于存放评论图片表"""
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="photos/", verbose_name="评论的图片")
+    image = models.ImageField(upload_to="photos_comments", verbose_name="评论的图片")
 
     class Meta:
         db_table = "Photos"
@@ -106,7 +106,7 @@ class Chihu(models.Model):
 class PhotoHuiTie(models.Model):
     """回帖图片"""
     comment_target = models.ForeignKey("Comment", on_delete=models.CASCADE, verbose_name="关联的评论")
-    models.ImageField(upload_to="photos/", verbose_name="图片")
+    photos = models.ImageField(upload_to="photos_huitie", verbose_name="图片", null=True)
 
     class Meta:
         db_table = "PhotoHuiTie"

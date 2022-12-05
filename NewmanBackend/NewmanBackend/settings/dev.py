@@ -69,7 +69,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "NewmanBackend.urls"
-
+# 存放数据库图片的文件夹
+MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'media').replace('\\', '/')  # 设置静态文件路径为主目录下的media文件夹
+MEDIA_URL = '/media/'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -98,6 +100,16 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '192.168.23.129',  # 数据库主机,要修改成自己的
+        'PORT': 3306,  # 数据库端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '66666666',  # 数据库用户密码
+        'NAME': 'ZiQiangBack'  # 数据库名字
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -105,19 +117,9 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #         'PORT': 3306,  # 数据库端口
 #         'USER': 'zqnewman',  # 数据库用户名
 #         'PASSWORD': '123456',  # 数据库用户密码
-#         'NAME': 'ZqNewmanDb_2'  # 数据库名字
+#         'NAME': 'ZqNewmanDb_1'  # 数据库名字
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
-        'PORT': 3306,  # 数据库端口
-        'USER': 'zqnewman',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb_1'  # 数据库名字
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

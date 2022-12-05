@@ -1,3 +1,4 @@
+import datetime
 import json
 import random
 
@@ -8,13 +9,12 @@ import sys
 from django.shortcuts import render
 
 sys.path.append("..")
-from db.models import Shop, Comment, User, Huitie
+from db.models import Shop, Comment, User, Huitie, PhotoHuiTie
 
-
-# from ..db.models import Shop, Comment, User, Huitie
-
-
-# from ..db.models import Shop, Comment, User, Huitie
+try:
+    from ..db.models import Shop, Comment, User, Huitie, PhotoHuiTie
+except:
+    pass
 
 
 # Create your views here.
@@ -128,17 +128,38 @@ def publish(request):
     # Todo
     if request.method == "GET":
         return render(request, "1.html")
+    # 获取值
     params: QueryDict = request.POST
     comment_id = int(params.get("comment_id"))
     shop_id = int(params.get("shop_id"))
     user_id = int(params.get("user_id"))
-    image_list = request.FILES.getlist("filename")
+    content = params.get("content")
+    shop_score = int(params.get("shop_score"))
+    # 数据库处理
+    try:
+        # 存储回帖图片
+        image_list = request.FILES.getlist("photos")
+        for image in image_list:
+            PhotoHuiTie.objects.create(comment_target_id=comment_id, photos=image)
+    except Exception:
+        print(Exception)
     # 评论+1
-    comment = Comment.objects.get(id=comment_id)
-    comment.reply_count += 1
-    comment.save()
+    try:
+        comment = Comment.objects.get(id=comment_id)
+        comment.reply_count += 1
+        comment.save()
+    except:
+        pass
     # 创建回帖数据
-    Huitie.objects.create(user_id=user_id)
+    Huitie.objects.create(user_id=user_id, comment_id=comment_id, content=content)
+    # 对店铺评分
+    try:
+        shop = Shop.objects.get(id=shop_id)
+        shop.shop_score += shop_score
+        shop.comment_count += 1
+        shop.save()
+    except:
+        pass
     return JsonResponse({"message": "True"})
 
 
