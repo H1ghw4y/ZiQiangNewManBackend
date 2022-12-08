@@ -5,11 +5,6 @@ sys.path.append("..")
 from db.models import User
 import json
 
-# def signin(request):
-#     # models.Book.objects.create(title='三国演义',price=100)
-#     dic = {"sid":2022,"password":123}
-#     User.objects.create(**dic)
-#     return HttpResponse('OK')
 
 def create_user(sid, password):
     User.objects.create(

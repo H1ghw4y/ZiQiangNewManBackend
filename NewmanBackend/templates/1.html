@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="http://127.0.0.1:8000/square/publish" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    选择图片:
+    <input type="file" name="filename" multiple="multiple"/><br>
+    <input type="submit" value="上传"/>
+</form>
+
+<p>尝试选取一张或者多种图片。</p>
+
+</body>
+</html>

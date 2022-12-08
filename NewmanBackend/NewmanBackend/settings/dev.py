@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     'rest_framework',  # DRF
-    #'test_lhw.apps.TestLhwConfig',
+    # 'test_lhw.apps.TestLhwConfig',
     # 'test_lhw.apps.TestLhwConfig',
     'shop.apps.ShopConfig',
     'square.apps.SquareConfig',
@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     "db.apps.DbConfig",
     "signin.apps.SigninConfig",
 ]
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -74,7 +73,7 @@ ROOT_URLCONF = "NewmanBackend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(Path(__file__).resolve().parent.parent.parent, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -99,14 +98,24 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+#         'PORT': 3306,  # 数据库端口
+#         'USER': 'zqnewman',  # 数据库用户名
+#         'PASSWORD': '123456',  # 数据库用户密码
+#         'NAME': 'ZqNewmanDb_2'  # 数据库名字
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+        'HOST': '192.168.23.129',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
-        'USER': 'zqnewman',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb_2'  # 数据库名字
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '66666666',  # 数据库用户密码
+        'NAME': 'ZiQiangBack'  # 数据库名字
     }
 }
 
@@ -147,14 +156,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:3306/0", #换成自己的
+        "LOCATION": "redis://127.0.0.1:3306/0",  # 换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "session": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1：3306/1", #换成自己的
+        "LOCATION": "redis://127.0.0.1：3306/1",  # 换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -164,8 +173,8 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
 # 以上为redis相关配置
 
-#以下为日志输出配置，还没配置好
-#参考：https://www.bilibili.com/video/BV1ya411A7C8/?p=12&spm_id_from=pageDriver&vd_source=763af5f146c65b47f793e885944c3b1b
+# 以下为日志输出配置，还没配置好
+# 参考：https://www.bilibili.com/video/BV1ya411A7C8/?p=12&spm_id_from=pageDriver&vd_source=763af5f146c65b47f793e885944c3b1b
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,  # 是否禁用已经存在的日志器
@@ -206,4 +215,4 @@ SESSION_CACHE_ALIAS = "session"
 #         },
 #     }
 # }
-#以上为日志输出配置
+# 以上为日志输出配置
