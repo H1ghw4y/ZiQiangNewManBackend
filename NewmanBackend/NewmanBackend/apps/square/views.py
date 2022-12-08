@@ -12,7 +12,7 @@ sys.path.append("..")
 from db.models import Shop, Comment, User, Huitie, PhotoHuiTie
 
 try:
-    from ..db.models import Shop, Comment, User, Huitie, PhotoHuiTie
+    from ..db.models import Shop, Comment, User, Huitie, PhotoHuiTie, Photos
 except:
     pass
 
@@ -20,16 +20,19 @@ except:
 # Create your views here.
 
 def api_test(request):
-    comments = Comment.objects.all()
-    for comment in comments:  # 对每个评论回复
-        huitie_contents = [f"{i}" * 9 + f"->to comment_id{comment.id}" for i in range(1, 8)]  # 构造回帖内容,i为用户id
-        for idx, Huitie_content in enumerate(huitie_contents):  # 模拟每个用户都评论
-            uid = idx + 1
-            if uid == comment.user.id:  # 自己不给自己回
-                continue
-            else:
-                Huitie.objects.create(content=Huitie_content, user_id=uid, comment_id=comment.id)
-    return HttpResponse("Success")
+    # comments = Comment.objects.all()
+    # for comment in comments:  # 对每个评论回复
+    #     huitie_contents = [f"{i}" * 9 + f"->to comment_id{comment.id}" for i in range(1, 8)]  # 构造回帖内容,i为用户id
+    #     for idx, Huitie_content in enumerate(huitie_contents):  # 模拟每个用户都评论
+    #         uid = idx + 1
+    #         if uid == comment.user.id:  # 自己不给自己回
+    #             continue
+    #         else:
+    #             Huitie.objects.create(content=Huitie_content, user_id=uid, comment_id=comment.id)
+    photo = PhotoHuiTie.objects.get(id=1)
+    photos = photo.photos.url
+    print(photos)
+    return render(request, "1.html")
 
 
 def get_page(request):
@@ -125,7 +128,6 @@ def detail(request):
 
 def publish(request):
     """发表评论"""
-    # Todo
     if request.method == "GET":
         return render(request, "1.html")
     # 获取值
@@ -192,19 +194,19 @@ def parse2object(comment: Comment):
     user = comment.user
     user_dict = dict()
     shop_dict = dict()
+
     user_dict["time"] = comment.publish_time.strftime("%Y-%m-%d")
     user_dict["user_name"] = user.user_name
-    # 你要修改好图片路径，才能使用下面的代码
-    # user_dict["user_profile_photo_url"] = the_user.user_profile_photo
+    user_dict["user_profile_photo_url"] = user.image.url
     user_dict["is_ChiHu"] = str(user.is_ch)
     user_dict["image_url"] = list()
-    # 你要修改好图片路径，才能使用下面的代码
-    # try:
-    #     photos = models.Photos.objects.get(id=comment.id)
-    #     for photo in photos:
-    #         user_dict["image_url"].append(photo.image)
-    # except models.Photos.DoesNotExist:
-    #     pass
+    # 评论图片
+    try:
+        photos = Photos.objects.filter(id=comment.id)
+        for photo in photos:
+            user_dict["image_url"].append(photo.image.url)
+    except:
+        pass
     user_comment_dict = dict()
     user_comment_dict["comment_id"] = str(comment.id)
     user_comment_dict["comment_content"] = comment.comment_content
