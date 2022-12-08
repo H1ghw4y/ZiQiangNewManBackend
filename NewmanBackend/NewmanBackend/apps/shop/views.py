@@ -5,7 +5,7 @@ from .serializers import ShopSerializer
 import sys
 
 sys.path.append("..")
-from db.models import Comment, Shop
+from db.models import Comment, Shop, Collect, User
 from square.serializers import CommentSerializer
 
 class ShopView(APIView):
@@ -101,6 +101,22 @@ class ShopDetailView(APIView):
         is_sort = request.query_params.get('sort')
         official_evaluation = request.query_params.get('official_evaluation')
         is_mark = request.query_params.get('mark')
+        mark_data = Collect.objects.filter(user__sid=request.query_params.get('user_sid'),shop__shop_name=the_shop_name)
+        mark_message = "该店铺"
+        if mark_data.exists():
+            if is_mark == "True":
+                pass
+            else:
+                delet = Collect.objects.filter(user__sid=request.query_params.get('user_sid'),shop__shop_name=the_shop_name).delete()
+                mark_message = mark_message+"从收藏夹中删除"
+        else:
+            if is_mark == "True":
+                the_user = User.objects.get(sid=request.query_params.get('user_sid'))
+                the_shop = Shop.objects.get(shop_name=the_shop_name)
+                the_Collect = Collect.objects.create(user=the_user, shop=the_shop)
+                mark_message = mark_message + "已加入收藏夹中"
+            else:
+                mark_message = mark_message + "未被收藏"
         # 只查看吃乎作者的评价
         if official_evaluation == "True":
             if is_sort == "True":
@@ -118,6 +134,7 @@ class ShopDetailView(APIView):
             count = Comment.objects.filter(shop__shop_name=the_shop_name)[:page*page_size].count()
         info = CommentSerializer(data, many=True)
         return Response({
-            "count": count,  # 还没写
+            "count": count,
+            "mark_message": mark_message,
             "data": info.data
         })
