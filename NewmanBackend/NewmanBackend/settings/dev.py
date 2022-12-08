@@ -15,7 +15,7 @@ from django.core.cache.backends.redis import RedisCache
 settings in developing environment
 开发阶段即未上线时项目文件
 """
-
+from ..apps import *
 from pathlib import Path
 import os, sys
 
@@ -49,8 +49,13 @@ INSTALLED_APPS = [
 
     'rest_framework',  # DRF
     # 'test_lhw.apps.TestLhwConfig',
+    # 'test_lhw.apps.TestLhwConfig',
     'shop.apps.ShopConfig',
     'square.apps.SquareConfig',
+    "user.apps.UserConfig",
+    "collect.apps.CollectConfig",
+    "db.apps.DbConfig",
+    "signin.apps.SigninConfig",
 ]
 
 MIDDLEWARE = [
@@ -64,11 +69,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "NewmanBackend.urls"
-
+# 存放数据库图片的文件夹
+MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'media').replace('\\', '/')  # 设置静态文件路径为主目录下的media文件夹
+MEDIA_URL = '/media/'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(Path(__file__).resolve().parent.parent.parent, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -96,13 +103,23 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+        'HOST': '192.168.23.129',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
-        'USER': 'zqnewman',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb_1'  # 数据库名字
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '66666666',  # 数据库用户密码
+        'NAME': 'ZiQiangBack'  # 数据库名字
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+#         'PORT': 3306,  # 数据库端口
+#         'USER': 'zqnewman',  # 数据库用户名
+#         'PASSWORD': '123456',  # 数据库用户密码
+#         'NAME': 'ZqNewmanDb_1'  # 数据库名字
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -141,14 +158,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://192.168.159.131:6379/0",  # 换成自己的
+        "LOCATION": "redis://127.0.0.1:3306/0",  # 换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
     "session": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://192.168.159.131:6379/1",  # 换成自己的
+        "LOCATION": "redis://127.0.0.1：3306/1",  # 换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }

@@ -26,6 +26,11 @@ router = routers.SimpleRouter()
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("shop/", include('shop.urls')),
-    path("square/", include("square.urls"))
+    path("square/", include("square.urls")),
+    path("user/collect/", include('collect.urls')),
+    path("user/", include('user.urls')),
+    path("signin/", include('signin.urls')),
 ]
 urlpatterns += router.urls
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
