@@ -142,6 +142,7 @@ def publish(request):
         # 存储回帖图片
         image_list = request.FILES.getlist("photos")
         for image in image_list:
+            print("@@@:",type(image))
             PhotoHuiTie.objects.create(comment_target_id=comment_id, photos=image)
     except Exception:
         print(Exception)

@@ -62,7 +62,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -100,26 +100,26 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.23.129',  # 数据库主机,要修改成自己的
-        'PORT': 3306,  # 数据库端口
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '66666666',  # 数据库用户密码
-        'NAME': 'ZiQiangBack'  # 数据库名字
-    }
-}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+#         'HOST': '192.168.23.129',  # 数据库主机,要修改成自己的
 #         'PORT': 3306,  # 数据库端口
-#         'USER': 'zqnewman',  # 数据库用户名
-#         'PASSWORD': '123456',  # 数据库用户密码
-#         'NAME': 'ZqNewmanDb_1'  # 数据库名字
+#         'USER': 'root',  # 数据库用户名
+#         'PASSWORD': '66666666',  # 数据库用户密码
+#         'NAME': 'ZiQiangBack'  # 数据库名字
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+        'PORT': 3306,  # 数据库端口
+        'USER': 'zqnewman',  # 数据库用户名
+        'PASSWORD': '123456',  # 数据库用户密码
+        'NAME': 'ZqNewmanDb_3'  # 数据库名字
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -165,7 +165,7 @@ CACHES = {
     },
     "session": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1：3306/1",  # 换成自己的
+        "LOCATION": "redis://127.0.0.1:3306/1",  # 换成自己的
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
