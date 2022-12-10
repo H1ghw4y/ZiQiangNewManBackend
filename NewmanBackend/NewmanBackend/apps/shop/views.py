@@ -8,6 +8,7 @@ sys.path.append("..")
 from db.models import Comment, Shop, Collect, User
 from square.serializers import CommentSerializer
 
+
 class ShopView(APIView):
     # 获取数据
     def get(self, request):
@@ -24,16 +25,16 @@ class ShopView(APIView):
         if is_selection == "True":
             # 这里is_sort是str, 默认是按shop_score排序，为True才按comment_count排序
             if is_sort == "True":
-                data = Shop.objects.filter(shop_isChiHu=True).order_by('-comment_count')[:page*page_size]
+                data = Shop.objects.filter(shop_isChiHu=True).order_by('-comment_count')[:page * page_size]
             else:
-                data = Shop.objects.filter(shop_isChiHu=True).order_by('-shop_score')[:page*page_size]
-            shop_count = Shop.objects.filter(shop_isChiHu=True)[:page*page_size].count()
+                data = Shop.objects.filter(shop_isChiHu=True).order_by('-shop_score')[:page * page_size]
+            shop_count = Shop.objects.filter(shop_isChiHu=True)[:page * page_size].count()
         else:
             if is_sort == "True":
-                data = Shop.objects.all().order_by('-comment_count')[:page*page_size]
+                data = Shop.objects.all().order_by('-comment_count')[:page * page_size]
             else:
-                data = Shop.objects.all().order_by('-shop_score')[:page*page_size]
-            shop_count = Shop.objects.all()[:page*page_size].count()
+                data = Shop.objects.all().order_by('-shop_score')[:page * page_size]
+            shop_count = Shop.objects.all()[:page * page_size].count()
         info = ShopSerializer(data, many=True)
         return Response({
             "count": shop_count,
@@ -101,37 +102,43 @@ class ShopDetailView(APIView):
         is_sort = request.query_params.get('sort')
         official_evaluation = request.query_params.get('official_evaluation')
         is_mark = request.query_params.get('mark')
-        mark_data = Collect.objects.filter(user__sid=request.query_params.get('user_sid'),shop__shop_name=the_shop_name)
-        mark_message = "该店铺"
+        mark_data = Collect.objects.filter(user__sid=request.query_params.get('user_sid'),
+                                           shop__shop_name=the_shop_name)
         if mark_data.exists():
-            if is_mark == "True":
+            if len(is_mark) == 0:
+                mark_message = "已收藏"
+            elif is_mark == "True":
                 pass
             else:
-                delet = Collect.objects.filter(user__sid=request.query_params.get('user_sid'),shop__shop_name=the_shop_name).delete()
-                mark_message = mark_message+"从收藏夹中删除"
+                delet = Collect.objects.filter(user__sid=request.query_params.get('user_sid'),
+                                               shop__shop_name=the_shop_name).delete()
+                mark_message =  "从收藏夹中删除"
         else:
             if is_mark == "True":
                 the_user = User.objects.get(sid=request.query_params.get('user_sid'))
                 the_shop = Shop.objects.get(shop_name=the_shop_name)
                 the_Collect = Collect.objects.create(user=the_user, shop=the_shop)
-                mark_message = mark_message + "已加入收藏夹中"
+                mark_message = "已收藏"
             else:
-                mark_message = mark_message + "未被收藏"
+                mark_message = "未被收藏"
         # 只查看吃乎作者的评价
         if official_evaluation == "True":
             if is_sort == "True":
                 # 按时间排序
-                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-publish_time')[:page*page_size]
+                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by(
+                    '-publish_time')[:page * page_size]
             else:
-                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-like_count')[:page*page_size]
-            count = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True)[:page*page_size].count()
+                data = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True).order_by('-like_count')[
+                       :page * page_size]
+            count = Comment.objects.filter(shop__shop_name=the_shop_name, user__is_ch=True)[:page * page_size].count()
         else:
             if is_sort == "True":
                 # 按时间排序
-                data = Comment.objects.filter(shop__shop_name=the_shop_name).order_by('-publish_time')[:page*page_size]
+                data = Comment.objects.filter(shop__shop_name=the_shop_name).order_by('-publish_time')[
+                       :page * page_size]
             else:
-                data = Comment.objects.filter(shop__shop_name=the_shop_name).order_by('-like_count')[:page*page_size]
-            count = Comment.objects.filter(shop__shop_name=the_shop_name)[:page*page_size].count()
+                data = Comment.objects.filter(shop__shop_name=the_shop_name).order_by('-like_count')[:page * page_size]
+            count = Comment.objects.filter(shop__shop_name=the_shop_name)[:page * page_size].count()
         info = CommentSerializer(data, many=True)
         return Response({
             "count": count,
