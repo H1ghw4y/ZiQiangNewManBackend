@@ -120,12 +120,13 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #         'NAME': 'ZqNewmanDb_3'  # 数据库名字
 #     }
 # }
+# 远程数据库
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '47.96.30.120',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
-        'USER': 'goodfood_user',  # 数据库用户名
+        'USER': 'godfood_user',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
         'NAME': 'goodfood_1'  # 数据库名字
     }
