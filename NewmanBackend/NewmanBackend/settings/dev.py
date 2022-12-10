@@ -110,17 +110,26 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #         'NAME': 'ZiQiangBack'  # 数据库名字
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+#         'PORT': 3306,  # 数据库端口
+#         'USER': 'zqnewman',  # 数据库用户名
+#         'PASSWORD': '123456',  # 数据库用户密码
+#         'NAME': 'ZqNewmanDb_3'  # 数据库名字
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
+        'HOST': '47.96.30.120',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
-        'USER': 'zqnewman',  # 数据库用户名
+        'USER': 'goodfood_user',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb_3'  # 数据库名字
+        'NAME': 'goodfood_1'  # 数据库名字
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
