@@ -35,7 +35,7 @@ SECRET_KEY = "django-insecure-6t8tdr4$g_xgzshs3i+%=x-hodg-f&*uab0py117#*%og6utk2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -124,9 +124,9 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '47.96.30.120',  # 数据库主机,要修改成自己的
+        'HOST': '127.0.0.1',  # 数据库主机,要修改成自己的
         'PORT': 3306,  # 数据库端口
-        'USER': 'godfood_user',  # 数据库用户名
+        'USER': 'goodfood_user',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
         'NAME': 'goodfood_1'  # 数据库名字
     }
@@ -228,3 +228,5 @@ SESSION_CACHE_ALIAS = "session"
 #     }
 # }
 # 以上为日志输出配置
+STATIC_URL = '/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
