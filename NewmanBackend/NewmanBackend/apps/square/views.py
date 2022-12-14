@@ -241,6 +241,6 @@ def parse_detail(huitie: Huitie):
     user = huitie.user
     data_dict["time"] = huitie.date.strftime("%Y-%m-%d")
     data_dict[" user_name"] = user.user_name
-    data_dict["user_profile_photo_url"] = user.image if user.image else ""
+    data_dict["user_profile_photo_url"] = user.image.url if user.image else ""
     data_dict["comment"] = huitie.content
     return data_dict

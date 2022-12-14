@@ -9,7 +9,7 @@ RUN python3 -m pip install uwsgi uwsgi-tools -i https://pypi.tuna.tsinghua.edu.c
 
 ADD requirements.txt requirements.txt
 
-RUN python3 -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN python3 -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 ADD uwsgi.ini uwsgi.ini
 
