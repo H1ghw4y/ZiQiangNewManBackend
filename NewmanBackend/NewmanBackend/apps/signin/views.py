@@ -17,7 +17,7 @@ def signin(request):
     data = json.loads(request.body)
     sid = data.get("sid")
     password = data.get("password")
-    a = {'is': True}
+    a = {'is': 'true_user'}
     try:
         user = User.objects.get(sid=sid)
     except:
@@ -25,7 +25,10 @@ def signin(request):
         return JsonResponse(a)
 
     if user.password == password:
-        pass
+        if user.is_admin == True:
+            a['is'] = 'true_admin'
+        if user.is_admin == False:
+            a['is'] = 'true_user'
     else:
-        a['is'] = False
+        a['is'] = 'false'
     return JsonResponse(a)

@@ -10,6 +10,7 @@ class User(models.Model):
     password = models.CharField(max_length=30, verbose_name="用户密码", default="")
     image = models.ImageField(upload_to="photos/", verbose_name="用户头像", null=True)
     is_ch = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
+    is_admin = models.BooleanField(default=False, verbose_name="# 是否是管理员")
 
     class Meta:
         db_table = "Users"
