@@ -142,7 +142,7 @@ def publish(request):
         # 存储回帖图片
         image_list = request.FILES.getlist("photos")
         for image in image_list:
-            print("@@@:",type(image))
+            print("@@@:", type(image))
             PhotoHuiTie.objects.create(comment_target_id=comment_id, photos=image)
     except Exception:
         print(Exception)
@@ -198,7 +198,11 @@ def parse2object(comment: Comment):
 
     user_dict["time"] = comment.publish_time.strftime("%Y-%m-%d")
     user_dict["user_name"] = user.user_name
-    user_dict["user_profile_photo_url"] = user.image.url
+    user_dict["user_profile_photo_url"] = ''
+    try:
+        user_dict["user_profile_photo_url"] = user.image.url
+    except:
+        pass
     user_dict["is_ChiHu"] = str(user.is_ch)
     user_dict["image_url"] = list()
     # 评论图片
@@ -237,6 +241,6 @@ def parse_detail(huitie: Huitie):
     user = huitie.user
     data_dict["time"] = huitie.date.strftime("%Y-%m-%d")
     data_dict[" user_name"] = user.user_name
-    data_dict["user_profile_photo_url"] = user.image if user.image else ""
+    data_dict["user_profile_photo_url"] = user.image.url if user.image else ""
     data_dict["comment"] = huitie.content
     return data_dict

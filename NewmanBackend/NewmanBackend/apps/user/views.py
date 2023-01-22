@@ -14,13 +14,18 @@ def get(request):
     sid = request.GET.get('sid')
     user1 = User.objects.get(sid=sid)
     user = UserSerializer(user1)
+    try:
+        image = user1.image.url
+    except:
+        pass
+    # image=默认头像url
+    user_tx = image
     comments = Comment.objects.filter(user=user1.id).order_by("-id")
     response_data = dict()
     response_data['user_data'] = user.data
+    response_data['user_tx'] = user_tx
     response_data["comment_count"] = comments.count()
-    # print(comments.count())
     response_data["comment"] = list()
-    # print(comments)
     for comment in comments:
         item = parse2object(comment)
         response_data["comment"].append(item)
@@ -50,14 +55,14 @@ def parse2object(comment: Comment):
     the_user = User.objects.get(id=comment.user_id)
     data["time"] = comment.publish_time.strftime("%Y-%m-%d")
     data["user_name"] = the_user.user_name
-    # data["user_profile_photo_url"] = the_user.image
-    # 你要修改好图片路径，才能使用下面的代码
-    # try:
-    #     photos = models.Photos.objects.get(id=comment.id)
-    #     for photo in photos:
-    #         user_dict["image_url"].append(photo.image)
-    # except models.Photos.DoesNotExist:
-    #     pass
+    data["image_url"] = list()
+    # 评论图片
+    try:
+        photos = Photos.objects.filter(id=comment.id)
+        for photo in photos:
+            data["image_url"].append(photo.image.url)
+    except:
+        pass
     the_shop = Shop.objects.get(id=comment.shop_id)
     data['shop_name'] = the_shop.shop_name
     data["comment_score"] = comment.shop_score
