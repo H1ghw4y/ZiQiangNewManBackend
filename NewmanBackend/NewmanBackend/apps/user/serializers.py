@@ -8,7 +8,7 @@ from db.models import User, Comment
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude = ('id', 'sid', 'password')
+        exclude = ('password',)
 
 
 class CommentSerializer(serializers.ModelSerializer):

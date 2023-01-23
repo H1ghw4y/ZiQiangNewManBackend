@@ -28,6 +28,7 @@ class Shop(models.Model):
     shop_score = models.IntegerField(default=0, verbose_name='店铺评分')
     comment_count = models.IntegerField(default=0, verbose_name='评论量')
     shop_isChiHu = models.BooleanField(default=False, verbose_name='是否吃乎认证')
+    time_renzheng = models.DateTimeField(auto_now=True, verbose_name='吃乎认证时间')
     # 注销该店铺
     is_delete = models.BooleanField(default=False, verbose_name='逻辑删除')
 

@@ -27,6 +27,7 @@ class Todo(View):
             else:
                 if i >= 3:
                     ids.append(id_flat)
+                id_flat = shop_id
                 i = 1
         for id in ids:
             shop = Shop.objects.get(id=id)
@@ -51,4 +52,29 @@ class Todo(View):
         return JsonResponse({
             "status": 200,
             "msg": "认证成功",
+        }, safe=False)
+
+
+class Done(View):
+    # 获取已认证店铺
+    def get(self, request):
+        done_shops = Shop.objects.filter(shop_isChiHu=True).order_by('-time_renzheng')
+        count = done_shops.count()
+        done = ShopSerializer(done_shops, many=True)
+        data = done.data
+        return JsonResponse({
+            "count": count,
+            "data": data
+        }, safe=False)
+
+    # 取消店铺认证
+    def post(self, request):
+        data = json.loads(request.body)
+        shop_id = data.get('shop_id')
+        shop = Shop.objects.get(id=shop_id)
+        shop.shop_isChiHu = False
+        shop.save()
+        return JsonResponse({
+            "status": 200,
+            "msg": "取消认证成功",
         }, safe=False)
