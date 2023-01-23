@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "collect.apps.CollectConfig",
     "db.apps.DbConfig",
     "signin.apps.SigninConfig",
+    "shop_renzheng.apps.ShopRenzhengConfig",
 ]
 
 MIDDLEWARE = [

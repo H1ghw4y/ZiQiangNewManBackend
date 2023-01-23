@@ -95,6 +95,7 @@ def change_name(request):
 
 class Renzheng(View):
 
+    # 查询是否为吃乎用户
     def get(self, request):
         a = {'is1': True}
         sid = request.GET.get('sid')
@@ -105,6 +106,7 @@ class Renzheng(View):
             a['is1'] = False
             return JsonResponse(a)
 
+    # 认证吃乎用户
     def post(self, request):
         b = {'is2': True}
         data = json.loads(request.body)
@@ -116,6 +118,5 @@ class Renzheng(View):
                 user.is_ch = True
                 user.save()
                 return JsonResponse(b)
-            else:
-                b['is2'] = False
-                return JsonResponse(b)
+        b['is2'] = False
+        return JsonResponse(b)

@@ -30,6 +30,7 @@ urlpatterns = [
     path("user/collect/", include('collect.urls')),
     path("user/", include('user.urls')),
     path("signin/", include('signin.urls')),
+    path("shop_renzheng/", include('shop_renzheng.urls')),
 ]
 urlpatterns += router.urls
 
