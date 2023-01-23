@@ -8,7 +8,7 @@ class User(models.Model):
     user_name = models.CharField(max_length=20, verbose_name="用户名", default="")
     sid = models.CharField(max_length=15, verbose_name=" 用户账号", default="")
     password = models.CharField(max_length=30, verbose_name="用户密码", default="")
-    image = models.ImageField(upload_to="photos/", verbose_name="用户头像", null=True)
+    image = models.ImageField(upload_to="photos_user/", verbose_name="用户头像", null=True)
     is_ch = models.BooleanField(default=False, verbose_name="# 是否是吃乎作者")
     is_admin = models.BooleanField(default=False, verbose_name="# 是否是管理员")
 

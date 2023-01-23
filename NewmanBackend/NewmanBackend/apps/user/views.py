@@ -1,7 +1,7 @@
 import json
 from .serializers import *
 
-from django.http import JsonResponse
+from django.http import JsonResponse, QueryDict
 import sys
 
 sys.path.append("..")
@@ -17,13 +17,11 @@ def get(request):
     try:
         image = user1.image.url
     except:
-        pass
-    # image=默认头像url
-    user_tx = image
+        image = "/media/photos_user/默认头像.jpg"
     comments = Comment.objects.filter(user=user1.id).order_by("-id")
     response_data = dict()
     response_data['user_data'] = user.data
-    response_data['user_tx'] = user_tx
+    response_data['user_data']['image'] = image
     response_data["comment_count"] = comments.count()
     response_data["comment"] = list()
     for comment in comments:
@@ -74,13 +72,13 @@ def parse2object(comment: Comment):
 
 
 def change_tx(request):
-    data = json.loads(request.body)
-    sid = data.get('sid')
-    tx = data.get('tx_image_url')
+    params: QueryDict = request.POST
+    sid = params.get("sid")
+    image = request.FILES.get("tx_photo")
     user = User.objects.get(sid=sid)
-    user.image = tx
+    user.image = image
     user.save()
-    return JsonResponse({'image': tx})
+    return JsonResponse({'image': user.image.url})
 
 
 def change_name(request):
