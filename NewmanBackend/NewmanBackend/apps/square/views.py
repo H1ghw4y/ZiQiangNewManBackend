@@ -20,18 +20,18 @@ except:
 # Create your views here.
 
 def api_test(request):
-    # comments = Comment.objects.all()
-    # for comment in comments:  # 对每个评论回复
-    #     huitie_contents = [f"{i}" * 9 + f"->to comment_id{comment.id}" for i in range(1, 8)]  # 构造回帖内容,i为用户id
-    #     for idx, Huitie_content in enumerate(huitie_contents):  # 模拟每个用户都评论
-    #         uid = idx + 1
-    #         if uid == comment.user.id:  # 自己不给自己回
-    #             continue
-    #         else:
-    #             Huitie.objects.create(content=Huitie_content, user_id=uid, comment_id=comment.id)
-    photo = PhotoHuiTie.objects.get(id=1)
-    photos = photo.photos.url
-    print(photos)
+    comments = Comment.objects.all()
+    for comment in comments:  # 对每个评论回复
+        huitie_contents = [f"{i}" * 9 + f"->to comment_id{comment.id}" for i in range(1, 8)]  # 构造回帖内容,i为用户id
+        for idx, Huitie_content in enumerate(huitie_contents):  # 模拟每个用户都评论
+            uid = idx + 1
+            if uid == comment.user.id:  # 自己不给自己回
+                continue
+            else:
+                Huitie.objects.create(content=Huitie_content, user_id=uid, comment_id=comment.id)
+    # photo = PhotoHuiTie.objects.get(id=1)
+    # photos = photo.photos.url
+    # print(photos)
     return render(request, "1.html")
 
 

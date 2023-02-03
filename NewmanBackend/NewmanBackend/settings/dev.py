@@ -121,26 +121,26 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #         'NAME': 'ZqNewmanDb_3'  # 数据库名字
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': '47.96.30.120',  # 数据库主机,要修改成自己的
-#         'PORT': 3306,  # 数据库端口
-#         'USER': 'goodfood_user',  # 数据库用户名
-#         'PASSWORD': '123456',  # 数据库用户密码
-#         'NAME': 'goodfood_1'  # 数据库名字
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',  # 数据库主机,要修改成自己的
-        'PORT': 3306,  # 数据库端口
-        'USER': '123',  # 数据库用户名
+        'HOST': '120.27.209.84',  # 数据库主机,要修改成自己的
+        'PORT': 10000,  # 数据库端口
+        'USER': 'root',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'zqnewmandb'  # 数据库名字
+        'NAME': 'good_food'  # 数据库名字
     }
-}  # ZJY 开发数据库
+}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': '127.0.0.1',  # 数据库主机,要修改成自己的
+#         'PORT': 3306,  # 数据库端口
+#         'USER': '123',  # 数据库用户名
+#         'PASSWORD': '123456',  # 数据库用户密码
+#         'NAME': 'zqnewmandb'  # 数据库名字
+#     }
+# }  # ZJY 开发数据库
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -239,3 +239,5 @@ SESSION_CACHE_ALIAS = "session"
 #     }
 # }
 # 以上为日志输出配置
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
