@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y vim
 WORKDIR /etc/uwsgi/django
 
 RUN python3 -m pip install uwsgi uwsgi-tools -i https://pypi.tuna.tsinghua.edu.cn/simple/
+#添加
+RUN python3 -m pip install djangorestframework -i https://pypi.tuna.tsinghua.edu.cn/simple/
+RUN python -m pip install pillow -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 ADD requirements.txt requirements.txt
 
