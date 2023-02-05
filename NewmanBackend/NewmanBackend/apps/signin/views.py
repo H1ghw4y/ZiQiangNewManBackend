@@ -9,7 +9,9 @@ import json
 def create_user(sid, password):
     User.objects.create(
         sid=sid,
-        password=password
+        password=password,
+        image="photos_user/默认头像.jpg"
+
     )
 
 
