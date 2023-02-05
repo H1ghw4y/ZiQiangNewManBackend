@@ -111,26 +111,26 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #         'NAME': 'ZiQiangBack'  # 数据库名字
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的
-#         'PORT': 3306,  # 数据库端口
-#         'USER': 'zqnewman',  # 数据库用户名
-#         'PASSWORD': '123456',  # 数据库用户密码
-#         'NAME': 'ZqNewmanDb_3'  # 数据库名字
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '120.27.209.84',  # 数据库主机,要修改成自己的
-        'PORT': 10000,  # 数据库端口
-        'USER': 'root',  # 数据库用户名
+        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的,这个是LHW的
+        'PORT': 3306,  # 数据库端口
+        'USER': 'zqnewman',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'good_food'  # 数据库名字
+        'NAME': 'ZqNewmanDb_3'  # 数据库名字
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': '120.27.209.84',  # 数据库主机,要修改成自己的
+#         'PORT': 10000,  # 数据库端口
+#         'USER': 'root',  # 数据库用户名
+#         'PASSWORD': '123456',  # 数据库用户密码
+#         'NAME': 'good_food'  # 数据库名字
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -176,24 +176,24 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # 以下为redis相关配置
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:3306/0",  # 换成自己的
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    },
-    "session": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:3306/1",  # 换成自己的
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "session"
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:3306/0",  # 换成自己的
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     },
+#     "session": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:3306/1",  # 换成自己的
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "session"
 # 以上为redis相关配置
 
 # 以下为日志输出配置，还没配置好
