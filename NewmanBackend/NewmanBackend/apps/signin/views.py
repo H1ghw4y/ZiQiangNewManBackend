@@ -35,3 +35,6 @@ def signin(request):
     else:
         a['is'] = 'false'
     return JsonResponse(a)
+
+
+
