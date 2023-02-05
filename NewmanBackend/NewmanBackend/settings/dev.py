@@ -111,26 +111,26 @@ WSGI_APPLICATION = "NewmanBackend.wsgi.application"
 #         'NAME': 'ZiQiangBack'  # 数据库名字
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的,这个是LHW的
-        'PORT': 3306,  # 数据库端口
-        'USER': 'zqnewman',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'ZqNewmanDb_3'  # 数据库名字
-    }
-}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': '120.27.209.84',  # 数据库主机,要修改成自己的
-#         'PORT': 10000,  # 数据库端口
-#         'USER': 'root',  # 数据库用户名
+#         'HOST': '192.168.159.131',  # 数据库主机,要修改成自己的,这个是LHW的
+#         'PORT': 3306,  # 数据库端口
+#         'USER': 'zqnewman',  # 数据库用户名
 #         'PASSWORD': '123456',  # 数据库用户密码
-#         'NAME': 'good_food'  # 数据库名字
+#         'NAME': 'ZqNewmanDb_3'  # 数据库名字
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '120.27.209.84',  # docker数据库
+        'PORT': 10000,  # 数据库端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '123456',  # 数据库用户密码
+        'NAME': 'good_food'  # 数据库名字
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',

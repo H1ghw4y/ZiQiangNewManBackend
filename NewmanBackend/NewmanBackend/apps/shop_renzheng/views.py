@@ -14,6 +14,16 @@ from .serializers import ShopSerializer
 class Todo(View):
     # 获取待认证店铺
     def get(self, request):
+        sid = request.GET.get('sid')
+        password = request.GET.get('password')
+        try:
+            user = User.objects.filter(is_admin=True).get(sid=sid)
+            if password != user.password:
+                return JsonResponse({"warning": 'permission denied'}, status=403)
+                # return HttpResponse(status=403)
+        except:
+            return JsonResponse({"warning": 'permission denied'}, status=403)
+                # return HttpResponse(status=403)
         user_is_ch_id = User.objects.filter(is_ch=True).values_list("id", flat=True)
         comments = Comment.objects.filter(user__in=user_is_ch_id).filter(shop_score=10).order_by('shop')
         shop_ids = comments.values_list("shop_id", flat=True)
@@ -58,6 +68,16 @@ class Todo(View):
 class Done(View):
     # 获取已认证店铺
     def get(self, request):
+        sid = request.GET.get('sid')
+        password = request.GET.get('password')
+        try:
+            user = User.objects.filter(is_admin=True).get(sid=sid)
+            if password != user.password:
+                return JsonResponse({"warning": 'permission denied'}, status=403)
+                # return HttpResponse(status=403)
+        except:
+            return JsonResponse({"warning": 'permission denied'}, status=403)
+            # return HttpResponse(status=403)
         done_shops = Shop.objects.filter(shop_isChiHu=True).order_by('-time_renzheng')
         count = done_shops.count()
         done = ShopSerializer(done_shops, many=True)
