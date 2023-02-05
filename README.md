@@ -28,6 +28,13 @@
 
 - 日志文件还没有配置好
 
+2023年2月5日：进行的修改有：
+
+- 使用Docker+uwsgi运行
+- 处理了图片上传和存储问题
+- 由于服务器MySQL关闭了公网访问，我们使用Docker compose运行docker里的mysql服务
+- 新增了管理端接口
+
 ```shell
 .
 │  .gitignore
