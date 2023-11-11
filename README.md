@@ -1,6 +1,5 @@
-[TOC]
-
-# ZiQiangBackend-珈有好食
+#【WHU自强技术中心】2022年后台组新人项目
+ZiQiangBackend-珈有好食
 ## 最新功能实现在ZJY_2分支上
 ## 开发要求
 
@@ -13,7 +12,7 @@
 
 参考：https://www.bilibili.com/video/BV1ya411A7C8?p=10&vd_source=763af5f146c65b47f793e885944c3b1b
 
-## 截至11月22日进行的修改有：
+## 截至2022年11月22日进行的修改有：
 
 - 将setting.py改成dev(开发使用)和prod(生产使用)两个文件，现在是开发阶段，使用dev作为配置文件
 
@@ -57,20 +56,6 @@
 ```shell
 :.
 ├─.idea
-│  ├─dataSources
-│  │  ├─3d0ebf7b-1579-4cce-87f8-8c3463d1db94
-│  │  │  └─storage_v2
-│  │  │      └─_src_
-│  │  │          └─schema
-│  │  ├─47fa2768-474d-4f48-af09-957923b68bca
-│  │  │  └─storage_v2
-│  │  │      └─_src_
-│  │  │          └─schema
-│  │  └─7dfe5944-0df4-4aab-a9e7-0604046ecf25
-│  │      └─storage_v2
-│  │          └─_src_
-│  │              └─schema
-│  └─inspectionProfiles
 ├─apps
 │  └─mysql
 │      └─conf
@@ -84,40 +69,22 @@
     │  ├─apps
     │  │  ├─collect
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
     │  │  ├─db
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
     │  │  ├─shop
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
     │  │  ├─shop_renzheng
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
     │  │  ├─signin
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
     │  │  ├─square
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
     │  │  ├─test_lhw
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
     │  │  ├─user
     │  │  │  ├─migrations
-    │  │  │  │  └─__pycache__
-    │  │  │  └─__pycache__
-    │  │  └─__pycache__
     │  ├─logs
     │  ├─settings
-    │  │  └─__pycache__
     │  ├─static
     │  │  ├─admin
     │  │  │  ├─css
@@ -142,8 +109,6 @@
     │  │      ├─fonts
     │  │      ├─img
     │  │      └─js
-    │  └─__pycache__
     ├─templates
-    └─__pycache__
 ```
 
